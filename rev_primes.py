@@ -29,7 +29,7 @@ def check_primes(value):
 	return True
 
 		
-# function to find prime numbers
+# function to find prime numbers and populate data for graphing
 def populate(prime_range):
 	n = []
 	an = []
@@ -44,10 +44,12 @@ def populate(prime_range):
 		i += 1
 	return n, an
 
+# store results
 data = populate(250000)
-
+# see how many primes
 print(len(data[0]))
 
+# plotting
 ax = fig.add_subplot(1,1,1)
 ax.scatter(data[0], data[1], s = .5, color = 'black')
 plt.show()
