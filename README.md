@@ -7,3 +7,7 @@
 
   * "nth prime minus its binary reversal"
  ![alt text](nth_prime_rev2.png)
+
+
+  * "Prime gap plotted on polar graph"
+ ![alt text](Primes/prime_gap_polar_graph.png)
