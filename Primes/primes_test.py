@@ -15,14 +15,14 @@ def primesfrom2to(n):
 
 
 # generate all primes that are equal or less than a1.max() 
-primes = primesfrom2to(10000000)
+primes = primesfrom2to(1000000)
 
 
 # print result    
 print(primes, len(primes))
 
 
-with open('primes_10m.csv', mode="w") as primes_file:
+with open('primes_1m.csv', mode="w") as primes_file:
     prime_writer = csv.writer(primes_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
     for i in range(1, len(primes) + 1):
         prime_writer.writerow([i, primes[i - 1]])
