@@ -20,3 +20,27 @@
   #   |      |                    |
   #   |      |                    |
   # (0,0)  (1,0)--(2,0)--(3,0)--(4,0)
+
+
+ 
+# first 15624 in csv adjacent
+# CODE TO TRANSLATE THE ORIGINAL IMPORT CSV INTO CLEANER DATA
+# a_csv = open('A220952_input.csv', mode="r").read().split('\n')
+# b_csv = open('A220952_in.csv', mode="w")
+# writer = csv.writer(b_csv, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+# for row in a_csv:
+# 	temp = row
+# 	temp2 = temp.split()
+# 	writer.writerow([temp2[0], temp2[1]])
+
+import matplotlib.pyplot as plt
+# import numpy as np 
+import pandas as pd
+
+t = pd.read_csv('A220952_in.csv')
+
+
+plt.plot(t['0'], t['0.1'], 'o')
+
+plt.savefig("A220952.png")
+

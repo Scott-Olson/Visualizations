@@ -11,3 +11,5 @@
 
   * "Prime gap plotted on polar graph"
  ![alt text](Primes/prime_gap_polar_graph.png)
+
+  * "Prime gap plotted on polar graph"
