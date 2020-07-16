@@ -1,5 +1,8 @@
 # Visualizations
-## Visualizations practice with python/matplotlib/numpy. 
+## Visualizations practice with python/matplotlib/numpy/pygame. 
+
+  * A* Pathfinding Algorithm.
+ ![alt text](astar.gif)
 
   * "Fly straight, dammit!" graph output.
 ![alt text](sully_plot_1800.png)
@@ -12,4 +15,3 @@
   * "Prime gap plotted on polar graph"
  ![alt text](Primes/prime_gap_polar_graph.png)
 
-  * "Prime gap plotted on polar graph"
