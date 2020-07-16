@@ -2,16 +2,16 @@
 ## Visualizations practice with python/matplotlib/numpy/pygame. 
 
   * A* Pathfinding Algorithm.
- ![alt text](astar.gif)
+ ![A* Pathfinder gif](astar.gif)
 
   * "Fly straight, dammit!" graph output.
-![alt text](sully_plot_1800.png)
+![fly striaght](sully_plot_1800.png)
 
 
   * "nth prime minus its binary reversal"
- ![alt text](nth_prime_rev2.png)
+ ![binary reverse graph](nth_prime_rev2.png)
 
 
   * "Prime gap plotted on polar graph"
- ![alt text](Primes/prime_gap_polar_graph.png)
+ ![polar graph of prime number gap](Primes/prime_gap_polar_graph.png)
 
