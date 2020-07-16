@@ -60,7 +60,7 @@ class Spot:
 	def reset(self):
 		self.color = WHITE
 
-	def make_close(self):
+	def make_closed(self):
 		self.color = RED
 
 	def make_open(self):
@@ -85,6 +85,7 @@ class Spot:
 		# check up, down, left, right if are barriers
 		self.neighbors = []
 
+		# check to make sure we aren't on an edge, then check if the spot below is a barrier
 		if self.row < self.total_rows - 1 and not grid[self.row + 1][self.col].is_barrier(): # DOWN
 			self.neighbors.append(grid[self.row + 1][self.col])
 
@@ -97,7 +98,7 @@ class Spot:
 		if self.col > 0 and not grid[self.row][self.col - 1].is_barrier(): # LEFT
 			self.neighbors.append(grid[self.row][self.col - 1])
 
-			
+
 	# less than, if you compare two of these classes will return false
 	def __lt__(self, other):
 		return False
@@ -110,6 +111,68 @@ def h(p1, p2):
 	x1, y1 = p1
 	x2, y2 = p2
 	return abs(x1 - x2) + abs(y1 - y2)
+
+def algorithm(draw, grid, start, end):
+	count = 0
+	open_set = PriorityQueue()
+	# initialize the queue
+	open_set.put((0, count, start))
+
+	# keeps track of the path, where we came from
+	came_from = {}
+
+	# dict comprehension to initialize g score
+	# keeps track of the current shortest distance from the start to the cur node
+	g_score = {spot: float("inf") for row in grid for spot in row}
+	# first node g_score is 0 because it is 0 away from the start
+	g_score[start] = 0
+
+	# dict comprehension to initialize f score
+	# keeps track of predicted distance from this node to end node
+	f_score = {spot: float("inf") for row in grid for spot in row}
+	# fscore initialized at h(n) because we want to estimate distance from start to end
+	f_score[start] = h(start.get_pos(), end.get_pos())
+
+	# keep track of items in PrioQ
+	open_set_hash = {start}
+
+	while not open_set.empty():
+		for event in pygame.event.get():
+			# exit the loop if click exit
+			if event.type == pygame.QUIT:
+				pygame.quit()
+		# grab the current value from the open set, pops the value
+		# use [2] because that the Node
+		current = open_set.get()[2]
+		# sync the hash table
+		open_set_hash.remove(current)
+
+		if current == end:
+			#make path back
+			return True
+
+		for neighbor in current.neighbors:
+			# add 1 for all the available neighbors
+			temp_g_score = g_score[current] + 1
+
+			# look if the gscore of current is lower than the neighbor
+			if temp_g_score < g_score[neighbor]:
+				came_from[neighbor] = current
+				g_score[neighbor] = temp_g_score
+				f_score[neighbor] = temp_g_score + h(neighbor.get_pos(), end.get_pos())
+				if neighbor not in open_set_hash:
+					count += 1
+					open_set.put((f_score[neighbor], count, neighbor))
+					open_set_hash.add(neighbor)
+					neighbor.make_open()
+
+		draw()
+
+		if current != start:
+			current.make_closed()
+
+	return False
+
 
 # make the grid of the game
 def make_grid(rows, width):
@@ -226,7 +289,13 @@ def main(win, width):
 			if event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_SPACE and not started:
 					# run the algorithm
-					pass
+
+					# on press space, update all the neighbors of all spots
+					for row in grid:
+						for spot in row:
+							spot.update_neighbors(grid)
+
+					algorithm(lambda: draw(win, grid, ROWS, width), grid, start, end)
 
 
 	pygame.quit()
