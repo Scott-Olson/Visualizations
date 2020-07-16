@@ -71,6 +71,7 @@ print(snum(10**12))
 # since we 'know' 10**8, we should only have to do 10**8+1 thru 10**12 and then sum them
 # 2818842841 + 
 # 10**12 = 
+# Need to adjust the methodology, this is computationally unreasonable. Too many permutations.
 
 
 
