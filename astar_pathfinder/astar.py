@@ -133,7 +133,7 @@ def algorithm(draw, grid, start, end):
 	# fscore initialized at h(n) because we want to estimate distance from start to end
 	f_score[start] = h(start.get_pos(), end.get_pos())
 
-	# keep track of items in PrioQ
+	# keep track of items in PrioQ, since we cannot peak into the PrioQ
 	open_set_hash = {start}
 
 	while not open_set.empty():
@@ -147,27 +147,35 @@ def algorithm(draw, grid, start, end):
 		# sync the hash table
 		open_set_hash.remove(current)
 
+		# terminus, if we can find a path back
 		if current == end:
 			#make path back
 			return True
-
+		# if not on the end node, examin the neighbors
+		# find the neighbor with lowest gscore
 		for neighbor in current.neighbors:
-			# add 1 for all the available neighbors
+			# add 1 for all the available neighbors, adding 'depth' from the start
 			temp_g_score = g_score[current] + 1
 
 			# look if the gscore of current is lower than the neighbor
 			if temp_g_score < g_score[neighbor]:
+				# add the path we took to get to current to the came_from dict, used to reconstruct path later
 				came_from[neighbor] = current
+				# update the gscore to reflect movement
 				g_score[neighbor] = temp_g_score
+				# update the fscore to reflect movement
 				f_score[neighbor] = temp_g_score + h(neighbor.get_pos(), end.get_pos())
+				# check if we have seen the neighbor node before
+				# if not, add to count, add it to the PrioQ and the hash table.
 				if neighbor not in open_set_hash:
 					count += 1
 					open_set.put((f_score[neighbor], count, neighbor))
 					open_set_hash.add(neighbor)
 					neighbor.make_open()
 
+		# update the window
 		draw()
-
+		# update the color of the current square to show we have been to it.
 		if current != start:
 			current.make_closed()
 
