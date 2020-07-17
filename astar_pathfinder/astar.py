@@ -2,7 +2,7 @@ import pygame, math
 from queue import PriorityQueue
 
 # set a var to hold width for pygame window
-WIDTH = 800
+WIDTH = 650
 # initialize the window as a pygame display with width x width
 WIN = pygame.display.set_mode((WIDTH, WIDTH))
 
