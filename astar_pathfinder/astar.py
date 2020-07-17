@@ -314,6 +314,7 @@ def main(win, width):
 							spot.update_neighbors(grid)
 
 					algorithm(lambda: draw(win, grid, ROWS, width), grid, start, end)
+					start.make_start()
 
 				# reset the board
 				if event.key == pygame.K_c:
