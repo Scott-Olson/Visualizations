@@ -112,6 +112,16 @@ def h(p1, p2):
 	x2, y2 = p2
 	return abs(x1 - x2) + abs(y1 - y2)
 
+def reconstruct_path(came_from, current, draw):
+	# current node starts at end node
+	while current in came_from:
+		# set current to the value that we came from to get to current
+		current = came_from[current]
+		# change the color of current to path color
+		current.make_path()
+		# update the window
+		draw()
+
 def algorithm(draw, grid, start, end):
 	count = 0
 	open_set = PriorityQueue()
@@ -150,7 +160,11 @@ def algorithm(draw, grid, start, end):
 		# terminus, if we can find a path back
 		if current == end:
 			#make path back
+			reconstruct_path(came_from, end, draw)
+			# recolor end
+			end.make_end()
 			return True
+
 		# if not on the end node, examin the neighbors
 		# find the neighbor with lowest gscore
 		for neighbor in current.neighbors:
@@ -233,7 +247,7 @@ def get_clicked_pos(pos, rows, width):
 # main game loop
 def main(win, width):
 	# desired number of rows for the game
-	ROWS = 50
+	ROWS = 25
 	# initialize the game grid
 	grid = make_grid(ROWS, width)
 	# variables for start node and end node
@@ -253,10 +267,6 @@ def main(win, width):
 			# check if someone exits the game
 			if event.type == pygame.QUIT:
 				run = False
-			# check if the algo has started to optimize path
-			# stops from changing the obstacles while on the path
-			if started:
-				continue
 
 			# left mouse button pressed
 			if pygame.mouse.get_pressed()[0]:
@@ -295,7 +305,7 @@ def main(win, width):
 					end = None
 
 			if event.type == pygame.KEYDOWN:
-				if event.key == pygame.K_SPACE and not started:
+				if event.key == pygame.K_SPACE and start and end:
 					# run the algorithm
 
 					# on press space, update all the neighbors of all spots
@@ -304,6 +314,12 @@ def main(win, width):
 							spot.update_neighbors(grid)
 
 					algorithm(lambda: draw(win, grid, ROWS, width), grid, start, end)
+
+				# reset the board
+				if event.key == pygame.K_c:
+					start = None
+					end = None
+					grid = make_grid(ROWS, width)
 
 
 	pygame.quit()
