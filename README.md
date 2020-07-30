@@ -2,7 +2,7 @@
 ## Visualizations practice with python/matplotlib/numpy/pygame. 
 
   * A* Pathfinding Algorithm.
- ![A* Pathfinder gif](astar_pathfinder/astar.gif)
+ ![A* Pathfinder gif](astar_pathfinder/exiastar.gif)
 
   * "Fly straight, dammit!" graph output.
 ![fly striaght](sully_plot_1800.png)
